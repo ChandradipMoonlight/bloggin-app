@@ -49,7 +49,8 @@ public class UserController {
 	}
 
 	@PutMapping("/{userId}")
-	public ResponseEntity<ResponseDTO> updateUserById(@PathVariable("userId") Integer userId, @RequestBody UserDTO userDTO) {
+	public ResponseEntity<ResponseDTO> updateUserById(@PathVariable("userId") Integer userId,
+			@RequestBody UserDTO userDTO) {
 		ResponseDTO response = new ResponseDTO(MessageProperties.UPDATEED_USER.getMessage(),
 				userService.updateUser(userDTO, userId));
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
