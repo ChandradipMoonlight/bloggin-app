@@ -31,8 +31,8 @@ public class UserService implements IUserService {
 	@Override
 	public UserDTO updateUser(UserDTO userDTO, Integer userId) {
 		User user = userRepo.findById(userId)
-				.orElseThrow(() -> new UserException(MessageProperties.USER_ALREADY_PRESENT.getMessage(), ExceptionType.USER_ALREADY_PRESENT));
-		
+				.orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
+
 		if (userDTO.getUserName() != null) {
 			user.setUserName(userDTO.getUserName());
 			System.out.println("inside set name");
@@ -54,7 +54,7 @@ public class UserService implements IUserService {
 	@Override
 	public UserDTO getUserById(Integer userId) {
 		User user = userRepo.findById(userId)
-				.orElseThrow(() -> new UserException(MessageProperties.USER_ALREADY_PRESENT.getMessage(), ExceptionType.USER_ALREADY_PRESENT));
+				.orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
 
 		return userToDto(user);
 	}
@@ -62,15 +62,14 @@ public class UserService implements IUserService {
 	@Override
 	public List<UserDTO> getAllUsers() {
 		List<User> userList = userRepo.findAll();
-		List<UserDTO> userDTOList = userList.stream().map(user -> userToDto(user))
-				.collect(Collectors.toList());
+		List<UserDTO> userDTOList = userList.stream().map(user -> userToDto(user)).collect(Collectors.toList());
 		return userDTOList;
 	}
 
 	@Override
 	public String deleteUser(Integer userId) {
 		User user = userRepo.findById(userId)
-				.orElseThrow(() -> new UserException(MessageProperties.USER_ALREADY_PRESENT.getMessage(), ExceptionType.USER_ALREADY_PRESENT));
+				.orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
 		userRepo.delete(user);
 		return MessageProperties.DELETED_USER.getMessage();
 	}
