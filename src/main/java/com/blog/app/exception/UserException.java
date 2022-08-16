@@ -6,6 +6,7 @@ public class UserException extends RuntimeException{
 	
 	public enum ExceptionType{
 		USER_ALREADY_PRESENT,
+		USER_NOT_FOUND,
 	}
 	private String message;
 	
