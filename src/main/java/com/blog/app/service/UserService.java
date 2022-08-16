@@ -1,0 +1,98 @@
+package com.blog.app.service;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.blog.app.enitity.User;
+import com.blog.app.exception.ResourceNotFoundException;
+import com.blog.app.exception.UserException;
+import com.blog.app.exception.UserException.ExceptionType;
+import com.blog.app.builder.MessageProperties;
+import com.blog.app.dto.UserDTO;
+import com.blog.app.repositories.UserRepo;
+
+@Service
+public class UserService implements IUserService {
+
+	@Autowired
+	private UserRepo userRepo;
+
+	@Override
+	public UserDTO createUser(UserDTO userDTO) {
+		User save = userRepo.save(dtoToUser(userDTO));
+		return userToDto(save);
+	}
+
+	@Override
+	public UserDTO updateUser(UserDTO userDTO, Integer userId) {
+		User user = userRepo.findById(userId)
+				.orElseThrow(() -> new UserException(MessageProperties.USER_ALREADY_PRESENT.getMessage(), ExceptionType.USER_ALREADY_PRESENT));
+		
+		if (userDTO.getUserName() != null) {
+			user.setUserName(userDTO.getUserName());
+			System.out.println("inside set name");
+		}
+		if (userDTO.getEmail() != null) {
+			user.setEmail(userDTO.getEmail());
+			System.out.println("inside set emil");
+		}
+		if (userDTO.getPassword() != null) {
+			user.setPassword(userDTO.getPassword());
+		}
+		if (userDTO.getAbout() != null) {
+			user.setAbout(userDTO.getAbout());
+		}
+		User updatedUser = userRepo.save(user);
+		return userToDto(updatedUser);
+	}
+
+	@Override
+	public UserDTO getUserById(Integer userId) {
+		User user = userRepo.findById(userId)
+				.orElseThrow(() -> new UserException(MessageProperties.USER_ALREADY_PRESENT.getMessage(), ExceptionType.USER_ALREADY_PRESENT));
+
+		return userToDto(user);
+	}
+
+	@Override
+	public List<UserDTO> getAllUsers() {
+		List<User> userList = userRepo.findAll();
+		List<UserDTO> userDTOList = userList.stream().map(user -> userToDto(user))
+				.collect(Collectors.toList());
+		return userDTOList;
+	}
+
+	@Override
+	public String deleteUser(Integer userId) {
+		User user = userRepo.findById(userId)
+				.orElseThrow(() -> new UserException(MessageProperties.USER_ALREADY_PRESENT.getMessage(), ExceptionType.USER_ALREADY_PRESENT));
+		userRepo.delete(user);
+		return MessageProperties.DELETED_USER.getMessage();
+	}
+
+	public User dtoToUser(UserDTO userDTO) {
+		User user = new User();
+		user.setUserId(userDTO.getUserId());
+		user.setUserName(userDTO.getUserName());
+		user.setEmail(userDTO.getEmail());
+		user.setPassword(userDTO.getPassword());
+		user.setAbout(userDTO.getAbout());
+		return user;
+	}
+
+	public UserDTO userToDto(User user) {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setUserId(user.getUserId());
+		userDTO.setUserName(user.getUserName());
+		userDTO.setEmail(user.getEmail());
+		userDTO.setPassword(user.getPassword());
+		userDTO.setAbout(user.getAbout());
+		return userDTO;
+	}
+
+}
