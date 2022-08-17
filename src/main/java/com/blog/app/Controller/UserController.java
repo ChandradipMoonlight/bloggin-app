@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blog.app.builder.MessageProperties;
 import com.blog.app.dto.ResponseDTO;
 import com.blog.app.dto.UserDTO;
-import com.blog.app.enitity.User;
 import com.blog.app.service.IUserService;
 
 @RestController
