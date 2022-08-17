@@ -12,34 +12,34 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
-public class User {
+@AllArgsConstructor
+@NoArgsConstructor
+public class Category {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer userId;
-	private String userName;
-	private String email;
-	private String password;
-	private String about;
+	private Integer categoryId;
 	
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch =FetchType.LAZY)
+	private String categoryTitle;
+	
+	private String categoryDiscription;
+	
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch =FetchType.LAZY)
 	private List<Post> posts;
 	
 	@CreationTimestamp
 	private Date createdDate;
 	
-	@CreationTimestamp
-	private Date updatedDate;
-	
+	@UpdateTimestamp
+	private Date updateDate;
 }
