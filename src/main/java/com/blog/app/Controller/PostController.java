@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.app.builder.MessageProperties;
 import com.blog.app.dto.PostDTO;
 import com.blog.app.dto.PostInputDTO;
+import com.blog.app.dto.PostResponse;
 import com.blog.app.dto.ResponseDTO;
 import com.blog.app.service.IPostService;
 
@@ -51,9 +53,13 @@ public class PostController {
 	}
 
 	@GetMapping("/posts")
-	public ResponseEntity<ResponseDTO> getAllPosts() {
+	public ResponseEntity<ResponseDTO> getAllPosts(
+			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize
+			) {
+		PostResponse postResponse = postService.getAllPosts(pageNumber, pageSize);
 		ResponseDTO response = new ResponseDTO(MessageProperties.FETCHED_ALL_POSTS.getMessage(),
-				postService.getAllPosts());
+				postResponse);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 

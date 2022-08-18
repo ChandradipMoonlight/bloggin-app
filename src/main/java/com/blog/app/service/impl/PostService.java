@@ -5,11 +5,15 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.blog.app.builder.MessageProperties;
 import com.blog.app.dto.PostDTO;
 import com.blog.app.dto.PostInputDTO;
+import com.blog.app.dto.PostResponse;
 import com.blog.app.enitity.Category;
 import com.blog.app.enitity.Post;
 import com.blog.app.enitity.User;
@@ -76,13 +80,23 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public List<PostDTO> getAllPosts() {
-		List<PostDTO> postList = postRepo.findAll()
+	public PostResponse getAllPosts(Integer pageNumber, Integer pageSize) {
+		Pageable page =PageRequest.of(pageNumber, pageSize);
+		Page<Post> pagePost = postRepo.findAll(page);
+		List<Post> postList = pagePost.getContent();
+		List<PostDTO> postDtoList = postList
 				.stream()
 				.map(post -> modelMapper.map(post, PostDTO.class))
 				.collect(Collectors.toList());
 
-		return postList;
+		PostResponse postResponse = new PostResponse();
+		postResponse.setPostsList(postDtoList);
+		postResponse.setPageNumber(pagePost.getNumber());
+		postResponse.setPageSize(pagePost.getSize());
+		postResponse.setTotalPages(pagePost.getTotalPages());
+		postResponse.setTotalElements(pagePost.getTotalElements());
+		postResponse.setLastPage(pagePost.isLast());
+		return postResponse;
 	}
 
 	@Override
