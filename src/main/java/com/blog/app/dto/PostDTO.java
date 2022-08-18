@@ -1,17 +1,21 @@
 package com.blog.app.dto;
 
+import java.time.LocalDate;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostDTO {
+public class PostDTO extends PostInputDTO{
+	private Integer postId;
 	
-	private String postTitle;
+	private UserDTO user;
 	
-	private String postContent;
+	private CategoryDTO category;
 	
-	private String imageName="default.png";
+	private LocalDate createdDate;
 }

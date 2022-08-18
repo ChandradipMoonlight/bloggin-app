@@ -15,6 +15,13 @@ public enum MessageProperties {
 	FETCHED_ALL_CATEGORY("All Categories are Fetched Successfully!"),
 	FETCHED_CATEGORY("Category Is Fetched Successfully"),
 	
+	POST_CREATED("Post Saved Successfully!"),
+	POST_UPDATED("Post Is Updated Successfully!"),
+	POST_DELETED("Post Is Deleted Successfully!"),
+	FETCHED_ALL_POSTS("All Posts are Fetched Successfully!"),
+	FETCHED_POST("Post Is Fetched Successfully!"),
+	
+	
 	;
 	private String message;
 

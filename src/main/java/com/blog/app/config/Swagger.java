@@ -28,7 +28,7 @@ public class Swagger  {
     private ApiInfo metaData() {
         return new ApiInfo(
                 "Spring Boot REST API",
-                "Spring Boot REST API for Online Store",
+                "Spring Boot REST API for Blogging App",
                 "1.0",
                 "Terms of service",
                 new Contact("Moonlight",

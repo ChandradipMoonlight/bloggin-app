@@ -1,6 +1,6 @@
 package com.blog.app.enitity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -40,8 +40,8 @@ public class Post {
 	private User user;
 	
 	@CreationTimestamp
-	private Date createdDate;
+	private LocalDate createdDate;
 	
 	@UpdateTimestamp
-	private Date updateDate;
+	private LocalDate updateDate;
 }
