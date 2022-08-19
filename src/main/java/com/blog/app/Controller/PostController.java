@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.blog.app.builder.MessageProperties;
+import com.blog.app.config.AppConstants;
 import com.blog.app.dto.PostDTO;
 import com.blog.app.dto.PostInputDTO;
 import com.blog.app.dto.PostResponse;
@@ -54,10 +55,10 @@ public class PostController {
 
 	@GetMapping("/posts")
 	public ResponseEntity<ResponseDTO> getAllPosts(
-			@RequestParam(value = "pageNumber", defaultValue = "0", required = false) Integer pageNumber,
-			@RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
-			@RequestParam(value = "sortBy", defaultValue = "postId", required = false) String sortBy,
-			@RequestParam(value = "orderBy", defaultValue = "asc", required = false) String orderBy) {
+			@RequestParam(value = "pageNumber", defaultValue = AppConstants.PAGE_NUMBER, required = false) Integer pageNumber,
+			@RequestParam(value = "pageSize", defaultValue = AppConstants.PAGE_SIZE, required = false) Integer pageSize,
+			@RequestParam(value = "sortBy", defaultValue = AppConstants.SORT_BY, required = false) String sortBy,
+			@RequestParam(value = "orderBy", defaultValue = AppConstants.ORDER_BY, required = false) String orderBy) {
 		PostResponse postResponse = postService.getAllPosts(pageNumber, pageSize, sortBy, orderBy);
 		ResponseDTO response = new ResponseDTO(MessageProperties.FETCHED_ALL_POSTS.getMessage(), postResponse);
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
