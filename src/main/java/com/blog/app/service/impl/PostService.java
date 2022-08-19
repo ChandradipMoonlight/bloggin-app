@@ -131,9 +131,12 @@ public class PostService implements IPostService {
 	}
 
 	@Override
-	public List<PostDTO> searchPostsByKeyword(String key) {
+	public List<PostDTO> searchPostByTitle(String key) {
 		
-		return null;
+		List<Post> postList = postRepo.findByPostTitleContaining(key);
+		List<PostDTO> postDtoList = postList.stream().map(posts -> modelMapper.map(posts, PostDTO.class))
+				.collect(Collectors.toList());
+		return postDtoList;
 	}
 
 }
