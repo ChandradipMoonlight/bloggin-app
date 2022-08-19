@@ -22,5 +22,5 @@ public interface IPostService {
 	
 	List<PostDTO> getAllPostsByUser(Integer userId);
 	
-	List<PostDTO> searchPostsByKeyword(String key);
+	List<PostDTO> searchPostByTitle(String key);
 }
