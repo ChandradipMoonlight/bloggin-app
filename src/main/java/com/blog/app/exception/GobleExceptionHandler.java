@@ -15,11 +15,11 @@ import com.blog.app.dto.ResponseDTO;
 @RestControllerAdvice
 public class GobleExceptionHandler {
 
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<ResponseDTO> globalExceptionHandler(Exception exception) {
-		ResponseDTO responseDTO = new ResponseDTO(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
-		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+//	@ExceptionHandler(Exception.class)
+//	public ResponseEntity<ResponseDTO> globalExceptionHandler(Exception exception) {
+//		ResponseDTO responseDTO = new ResponseDTO(exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR.value());
+//		return new ResponseEntity<ResponseDTO>(responseDTO, HttpStatus.INTERNAL_SERVER_ERROR);
+//	}
 
 	@ExceptionHandler(UserException.class)
 	public ResponseEntity<ResponseDTO> UserExceptionHandler(UserException exception) {

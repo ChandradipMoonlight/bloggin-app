@@ -20,6 +20,7 @@ public enum MessageProperties {
 	POST_DELETED("Post Is Deleted Successfully!"),
 	FETCHED_ALL_POSTS("All Posts are Fetched Successfully!"),
 	FETCHED_POST("Post Is Fetched Successfully!"),
+	IMAGE_UPLOADED("Image Uploaded Successfully!"),
 	
 	
 	;
