@@ -5,8 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserDTO extends UserInputDTO {
+public class CommentDTO extends CommentInputDTO {
 	
-	private Integer userId;
-	
+	private Integer commentId;
 }

@@ -11,6 +11,7 @@ import com.blog.app.enitity.User;
 import com.blog.app.exception.ResourceNotFoundException;
 import com.blog.app.builder.MessageProperties;
 import com.blog.app.dto.UserDTO;
+import com.blog.app.dto.UserInputDTO;
 import com.blog.app.repositories.UserRepo;
 import com.blog.app.service.IUserService;
 
@@ -24,29 +25,27 @@ public class UserService implements IUserService {
 	private ModelMapper modelMapper;
 
 	@Override
-	public UserDTO createUser(UserDTO userDTO) {
-		User save = userRepo.save(dtoToUser(userDTO));
+	public UserDTO createUser(UserInputDTO userInputDTO) {
+		User save = userRepo.save(modelMapper.map(userInputDTO, User.class));
 		return userToDto(save);
 	}
 
 	@Override
-	public UserDTO updateUser(UserDTO userDTO, Integer userId) {
+	public UserDTO updateUser(UserInputDTO userInputDTO, Integer userId) {
 		User user = userRepo.findById(userId)
 				.orElseThrow(() -> new ResourceNotFoundException("User", "UserId", userId));
 
-		if (userDTO.getUserName() != null) {
-			user.setUserName(userDTO.getUserName());
-			System.out.println("inside set name");
+		if (userInputDTO.getUserName() != null) {
+			user.setUserName(userInputDTO.getUserName());
 		}
-		if (userDTO.getEmail() != null) {
-			user.setEmail(userDTO.getEmail());
-			System.out.println("inside set emil");
+		if (userInputDTO.getEmail() != null) {
+			user.setEmail(userInputDTO.getEmail());
 		}
-		if (userDTO.getPassword() != null) {
-			user.setPassword(userDTO.getPassword());
+		if (userInputDTO.getPassword() != null) {
+			user.setPassword(userInputDTO.getPassword());
 		}
-		if (userDTO.getAbout() != null) {
-			user.setAbout(userDTO.getAbout());
+		if (userInputDTO.getAbout() != null) {
+			user.setAbout(userInputDTO.getAbout());
 		}
 		User updatedUser = userRepo.save(user);
 		return userToDto(updatedUser);

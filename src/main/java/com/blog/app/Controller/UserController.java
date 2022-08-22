@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.blog.app.builder.MessageProperties;
 import com.blog.app.dto.ResponseDTO;
 import com.blog.app.dto.UserDTO;
+import com.blog.app.dto.UserInputDTO;
 import com.blog.app.service.IUserService;
 
 @RestController
@@ -29,9 +30,9 @@ public class UserController {
 	private IUserService userService;
 
 	@PostMapping("/")
-	public ResponseEntity<ResponseDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
+	public ResponseEntity<ResponseDTO> createUser(@Valid @RequestBody UserInputDTO userInputDTO) {
 		ResponseDTO response = new ResponseDTO(MessageProperties.REGISTRATION_SUCCESSFUL.getMessage(),
-				userService.createUser(userDTO));
+				userService.createUser(userInputDTO));
 		return new ResponseEntity<>(response, HttpStatus.CREATED);
 	}
 
@@ -51,9 +52,9 @@ public class UserController {
 
 	@PutMapping("/{userId}")
 	public ResponseEntity<ResponseDTO> updateUserById(@PathVariable("userId") Integer userId,
-			@Valid @RequestBody UserDTO userDTO) {
+			@Valid @RequestBody UserInputDTO userInputDTO) {
 		ResponseDTO response = new ResponseDTO(MessageProperties.UPDATEED_USER.getMessage(),
-				userService.updateUser(userDTO, userId));
+				userService.updateUser(userInputDTO, userId));
 		return new ResponseEntity<ResponseDTO>(response, HttpStatus.OK);
 	}
 

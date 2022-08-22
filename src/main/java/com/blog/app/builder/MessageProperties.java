@@ -22,6 +22,11 @@ public enum MessageProperties {
 	FETCHED_POST("Post Is Fetched Successfully!"),
 	IMAGE_UPLOADED("Image Uploaded Successfully!"),
 	
+	COMMENT_ADDED("Comment saved successfully!"),
+	COMMENT_DELETED("Comment Deleted Successfully!"),
+	COMMENT_UPDATED("Comment Updated Successfully!"),
+	FETCHED_ALL_COMMENTS("All command fetched Successfully!"),
+	FETCHED_POST_COMMENTS("Fetched All Comments For Post!"),
 	
 	;
 	private String message;
